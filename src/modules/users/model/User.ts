@@ -1,7 +1,16 @@
-import { v4 as uuidV4 } from "uuid";
+import { BaseModel } from "./BaseModel";
 
-class User {
-  // Complete aqui
+class User extends BaseModel {
+  name: string;
+  admin: boolean;
+  email: string;
+
+  constructor() {
+    super();
+    if (!this.admin) {
+      this.admin = false;
+    }
+  }
 }
 
 export { User };
