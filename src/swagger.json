@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User manipulation app",
+    "description": "This is an API to create, update and get users data",
+    "version": "1.0.0",
+    "contact": {
+      "email": "alissonhonostoriodev@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Create a new user",
+        "description": "Route used to create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "User Name",
+                  "email": "useremail@mail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "User already exists"
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all users",
+        "description": "Get all users, using the headers params to identify as user admin or not",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "user_id to identify a user as admin or not",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return users with success"
+          },
+          "400": {
+            "description": "User doesn't exists or is not a admin"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update admin status",
+        "description": "Update the admin status from a user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "user_id to find a user who will be changed the admin status",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated"
+          },
+          "404": {
+            "description": "UserId not founded"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user by Id",
+        "description": "Get a user who has the same id passed by parameter",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "user_id needed to search a user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the user with success"
+          },
+          "404": {
+            "description": "User not founded"
+          }
+        }
+      }
+    }
+  }
+}
